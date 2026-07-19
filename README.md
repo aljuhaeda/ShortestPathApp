@@ -9,6 +9,8 @@ A Java desktop application that finds and displays the shortest path between cit
 
 Built as a data-structures course project. Given a set of cities and weighted edges (distances or costs) between them, the app computes and visualizes the shortest path between any two cities using Dijkstra's algorithm.
 
+![Screenshot: shortest path found between Malang and Kediri via Batu](docs/screenshot.png)
+
 ## Features
 
 - Interactive Swing GUI for adding vertices and weighted edges
@@ -54,6 +56,15 @@ Right-click `ShortestPathAppGUI.java` → `Run File`, or press `F6` to run the p
 2. Add directed weighted edges (e.g., `A → B: 5`).
 3. Select a source and destination.
 4. Click **Find Shortest Path** — the app displays the path and total distance.
+
+## Fixed Since Original Submission
+
+A few real crash bugs were found and fixed in `DirectedWeightedGraph` and `ShortestPathAppGUI` since this was originally submitted as coursework:
+
+- **Removing a city (`Remove Kota`) left a null hole in the vertex list**, causing a `NullPointerException` on the very next action (viewing cities, finding a path, etc.). Fixed by properly compacting the vertex list and adjacency matrix on removal.
+- **Looking up a path between two disconnected cities crashed** instead of reporting "no path available" — the code was checking the *source* vertex's reachability instead of the *destination*'s. Fixed, and unknown city names are now validated before use instead of causing an out-of-bounds crash.
+- **`Tambah Jalur` (add path) crashed if the distance dialog was cancelled or given non-numeric input** (unguarded `Integer.parseInt`). Now shows an error message instead.
+- **A shortest path touching every vertex in the graph could overflow its result array** (off-by-one in the array size). Fixed.
 
 ## License
 

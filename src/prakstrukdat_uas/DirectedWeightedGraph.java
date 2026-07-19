@@ -26,6 +26,10 @@ public class DirectedWeightedGraph {
     }
 
     public void addVertex(String label) {
+        if (nVerts >= MAX_VERTS) {
+            displayResult("Gagal: sudah mencapai batas maksimum " + MAX_VERTS + " kota.");
+            return;
+        }
         vertexList[nVerts++] = new Vertex(label);
     }
 
@@ -43,12 +47,31 @@ public class DirectedWeightedGraph {
     public void removeVertex(String cityName) {
         int index = findName(cityName);
         if (index >= 0) {
-            // Remove the vertex and its associated edges
-            vertexList[index] = null;
-            for (int i = 0; i < nVerts; i++) {
-                adjMat[index][i] = 0;
-                adjMat[i][index] = 0;
+            // Shift every later vertex (and its adjacency rows/cols) down by one
+            // so there's never a null hole in vertexList[0..nVerts).
+            for (int i = index; i < nVerts - 1; i++) {
+                vertexList[i] = vertexList[i + 1];
             }
+            vertexList[nVerts - 1] = null;
+
+            for (int i = index; i < nVerts - 1; i++) {
+                for (int col = 0; col < nVerts; col++) {
+                    adjMat[i][col] = adjMat[i + 1][col];
+                }
+            }
+            for (int i = index; i < nVerts - 1; i++) {
+                for (int row = 0; row < nVerts; row++) {
+                    adjMat[row][i] = adjMat[row][i + 1];
+                }
+            }
+            for (int col = 0; col < nVerts; col++) {
+                adjMat[nVerts - 1][col] = 0;
+            }
+            for (int row = 0; row < nVerts; row++) {
+                adjMat[row][nVerts - 1] = 0;
+            }
+
+            nVerts--;
             displayResult("City removed: " + cityName);
         } else {
             displayResult("City not found: " + cityName);
@@ -131,8 +154,11 @@ public class DirectedWeightedGraph {
     public String findPaths(String kotaAsal, String kotaTujuan) {
         int intAsal = findName(kotaAsal);
         int intTujuan = findName(kotaTujuan);
+        if (intAsal < 0 || intTujuan < 0) {
+            return "\n!! Kota tidak ditemukan !!\n";
+        }
         dijkstra(intAsal);
-        if (vertexList[intAsal].pathLength == INFINITY) {
+        if (vertexList[intTujuan].pathLength == INFINITY) {
             return "Tidak ada jalur yang tersedia dari " + kotaAsal + " ke " + vertexList[intTujuan].toString() + "\n";
         } else {
             return findPath(intAsal, intTujuan);
@@ -140,15 +166,16 @@ public class DirectedWeightedGraph {
     }
 
     private String findPath(int source, int end) {
-        int i, u;
-        int[] path = new int[nVerts];
+        // A path can touch every vertex, so this is sized nVerts + 1
+        // (not nVerts) to always have room for the source itself.
+        int[] path = new int[nVerts + 1];
         int length = 0;
         int count = 0;
 
         while (source != end) {
             count++;
             path[count] = end;
-            u = vertexList[end].predecessors;
+            int u = vertexList[end].predecessors;
             length += adjMat[u][end];
             end = u;
         }
@@ -156,7 +183,7 @@ public class DirectedWeightedGraph {
         path[count] = source;
 
         StringBuilder result = new StringBuilder("Jalur Terdekat : ");
-        for (i = count; i > 0; i--) {
+        for (int i = count; i > 0; i--) {
             result.append(vertexList[path[i]].toString());
             if (i - 1 == 0) {
                 result.append(".");

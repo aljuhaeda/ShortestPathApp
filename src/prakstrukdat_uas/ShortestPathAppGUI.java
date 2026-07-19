@@ -122,9 +122,21 @@ public class ShortestPathAppGUI extends JFrame {
     private void addPath() {
         String startCity = JOptionPane.showInputDialog("Masukkan kota awal:");
         String endCity = JOptionPane.showInputDialog("Masukkan kota akhir:");
-        int distance = Integer.parseInt(JOptionPane.showInputDialog("Input jarak:"));
+        if (startCity == null || endCity == null || startCity.isEmpty() || endCity.isEmpty()) {
+            displayResult("Invalid input. tolong input kota dan jarak yang valid.");
+            return;
+        }
 
-        if (startCity != null && endCity != null && distance > 0) {
+        String distanceInput = JOptionPane.showInputDialog("Input jarak:");
+        int distance;
+        try {
+            distance = Integer.parseInt(distanceInput);
+        } catch (NumberFormatException e) {
+            displayResult("Invalid input. Jarak harus berupa angka.");
+            return;
+        }
+
+        if (distance > 0) {
             graph.addEdge(startCity, endCity, distance);
             displayResult("Jalur ditambah: " + startCity + " ke " + endCity + " (" + distance + " km)");
         } else {
