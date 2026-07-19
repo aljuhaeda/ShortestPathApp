@@ -1,72 +1,64 @@
-# ShortestPathApp
+# ShortestPathApp — Dijkstra's Algorithm with a Java GUI
 
-ShortestPathApp is a Java application implementing the Dijkstra Algorithm. The app is designed to find and display the shortest paths between cities. The project includes a GUI (Graphical User Interface) to provide a user-friendly experience.
+A Java desktop application that finds and displays the shortest path between cities using **Dijkstra's algorithm** on a directed weighted graph, wrapped in a Swing GUI.
+
+[![Java](https://img.shields.io/badge/Java-ED8B00?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+## Overview
+
+Built as a data-structures course project. Given a set of cities and weighted edges (distances or costs) between them, the app computes and visualizes the shortest path between any two cities using Dijkstra's algorithm.
+
+## Features
+
+- Interactive Swing GUI for adding vertices and weighted edges
+- Directed weighted graph implementation from scratch
+- Dijkstra's shortest-path algorithm
+- Displays computed shortest path and total cost
 
 ## Project Structure
 
 ```
 ShortestPathApp/
-│
-├── build/
-│
-├── nbproject/
-│
-├── src/
-│   ├── DirectedWeightedGraph.java
-│   ├── ShortestPathAppGUI.java
-│   ├── Vertex.java
-│
-├── test/
-│
-├── build.xml
+├── src/prakstrukdat_uas/
+│   ├── DirectedWeightedGraph.java   # Graph data structure
+│   ├── Vertex.java                  # Vertex class
+│   └── ShortestPathAppGUI.java      # Swing GUI + Dijkstra runner
+├── build.xml                         # Ant build file
+├── manifest.mf
 ├── LICENSE
 └── README.md
 ```
 
-- **`src/`**: Contains the main Java program files.
-  - `DirectedWeightedGraph.java`: Implementation of the directed weighted graph.
-  - `ShortestPathAppGUI.java`: Graphical User Interface for the ShortestPathApp.
-  - `Vertex.java`: Class representing a vertex in the graph.
-
-- **`build/`**: Directory for build-related files.
-
-- **`nbproject/`**: NetBeans project files.
-
-- **`test/`**: Directory for test-related files.
-
 ## Getting Started
 
-1. **Clone the Repository:**
+**Prerequisites** — JDK 8+ and NetBeans (or any Java IDE with Ant support).
 
-   ```bash
-   git clone https://github.com/your-username/ShortestPathApp.git
-   ```
+**1. Clone the repo**
 
-2. **Navigate to the Project Directory:**
+```bash
+git clone https://github.com/aljuhaeda/ShortestPathApp.git
+```
 
-   ```bash
-   cd ShortestPathApp
-   ```
+**2. Open in NetBeans**
 
-3. **Open the Project in NetBeans:**
+`File → Open Project` and select the `ShortestPathApp` folder.
 
-   Open NetBeans and select "Open Project." Navigate to the ShortestPathApp project directory and open it.
+**3. Run**
 
-4. **Run the Application:**
-
-   Find the main class (e.g., `ShortestPathAppGUI`) and run it.
+Right-click `ShortestPathAppGUI.java` → `Run File`, or press `F6` to run the project.
 
 ## Usage
 
-- Launch the application.
-- Input the cities or vertices.
-- Define the weighted edges between cities.
-- Click on the "Find Shortest Path" button to calculate and display the shortest paths between specified cities.
-
-## Contributing
-
-Feel free to contribute to the project. If you have suggestions, improvements, or found a bug, please open an issue or create a pull request.
+1. Add vertices (cities) via the GUI.
+2. Add directed weighted edges (e.g., `A → B: 5`).
+3. Select a source and destination.
+4. Click **Find Shortest Path** — the app displays the path and total distance.
 
 ## License
 
-ShortestPathApp is licensed under the [MIT License](LICENSE).
+MIT. See [LICENSE](LICENSE).
+
+## Author
+
+**Zul Iflah Al Juhaeda** — [LinkedIn](https://linkedin.com/in/aljuhaeda) · [GitHub](https://github.com/aljuhaeda)
