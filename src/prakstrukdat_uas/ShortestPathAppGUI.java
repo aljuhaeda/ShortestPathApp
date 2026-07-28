@@ -90,8 +90,7 @@ public class ShortestPathAppGUI extends JFrame {
     private void removeCity() {
         String cityName = JOptionPane.showInputDialog("Masukkan Kota untuk di remove:");
         if (cityName != null && !cityName.isEmpty()) {
-            graph.removeVertex(cityName);
-            displayResult("Kota removed: " + cityName);
+            displayResult(graph.removeVertex(cityName));
         } else {
             displayResult("Invalid input. Tolong input nama kota yang benar.");
         }
@@ -102,8 +101,7 @@ public class ShortestPathAppGUI extends JFrame {
         String endCity = JOptionPane.showInputDialog("Masukkan Kota Akhir:");
 
         if (startCity != null && endCity != null && !startCity.isEmpty() && !endCity.isEmpty()) {
-            graph.removeEdge(startCity, endCity);
-            displayResult("Jalur removed: " + startCity + " ke " + endCity);
+            displayResult(graph.removeEdge(startCity, endCity));
         } else {
             displayResult("Invalid input. Tolong input kota awal dan akhir yang ada.");
         }
@@ -112,8 +110,7 @@ public class ShortestPathAppGUI extends JFrame {
     private void addCity() {
         String cityName = JOptionPane.showInputDialog("Masukkan nama kota:");
         if (cityName != null && !cityName.isEmpty()) {
-            graph.addVertex(cityName);
-            displayResult("Kota ditambah: " + cityName);
+            displayResult(graph.addVertex(cityName));
         } else {
             displayResult("Invalid input. Tolong input nama kota yang valid.");
         }
@@ -137,8 +134,7 @@ public class ShortestPathAppGUI extends JFrame {
         }
 
         if (distance > 0) {
-            graph.addEdge(startCity, endCity, distance);
-            displayResult("Jalur ditambah: " + startCity + " ke " + endCity + " (" + distance + " km)");
+            displayResult(graph.addEdge(startCity, endCity, distance));
         } else {
             displayResult("Invalid input. tolong input kota dan jarak yang valid.");
         }

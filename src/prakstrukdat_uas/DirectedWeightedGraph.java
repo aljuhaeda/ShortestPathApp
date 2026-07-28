@@ -25,26 +25,28 @@ public class DirectedWeightedGraph {
         }
     }
 
-    public void addVertex(String label) {
+    public String addVertex(String label) {
         if (nVerts >= MAX_VERTS) {
-            displayResult("Gagal: sudah mencapai batas maksimum " + MAX_VERTS + " kota.");
-            return;
+            return "Gagal: sudah mencapai batas maksimum " + MAX_VERTS + " kota.";
+        }
+        if (findName(label) >= 0) {
+            return "Gagal: kota '" + label + "' sudah ada.";
         }
         vertexList[nVerts++] = new Vertex(label);
+        return "Kota ditambah: " + label;
     }
 
-    public void addEdge(String start, String end, int length) {
+    public String addEdge(String start, String end, int length) {
         int intStart = findName(start);
         int intEnd = findName(end);
         if (intStart < 0 || intEnd < 0) {
-            System.out.println("\n!! Gagal Menambahkan Jalur !!\n");
-        } else {
-            adjMat[intStart][intEnd] = length;
-            System.out.println("Jalur Berhasil Ditambahkan : \n" + start + " --> " + end + " : " + length + " km\n");
+            return "!! Gagal Menambahkan Jalur: kota tidak ditemukan !!";
         }
+        adjMat[intStart][intEnd] = length;
+        return "Jalur ditambah: " + start + " --> " + end + " (" + length + " km)";
     }
 
-    public void removeVertex(String cityName) {
+    public String removeVertex(String cityName) {
         int index = findName(cityName);
         if (index >= 0) {
             // Shift every later vertex (and its adjacency rows/cols) down by one
@@ -72,32 +74,31 @@ public class DirectedWeightedGraph {
             }
 
             nVerts--;
-            displayResult("City removed: " + cityName);
+            return "City removed: " + cityName;
         } else {
-            displayResult("City not found: " + cityName);
+            return "City not found: " + cityName;
         }
     }
 
-    public void removeEdge(String start, String end) {
+    public String removeEdge(String start, String end) {
         int intStart = findName(start);
         int intEnd = findName(end);
         if (intStart >= 0 && intEnd >= 0) {
             // Remove the edge
             adjMat[intStart][intEnd] = 0;
-            displayResult("Path removed: " + start + " to " + end);
+            return "Path removed: " + start + " to " + end;
         } else {
-            displayResult("Invalid input. Please provide valid starting and ending cities.");
+            return "Invalid input. Please provide valid starting and ending cities.";
         }
     }
 
     private int findName(String name) {
-        int status = -1;
         for (int i = 0; i < nVerts; i++) {
             if (vertexList[i].toString().equals(name)) {
-                status = i;
+                return i;
             }
         }
-        return status;
+        return -1;
     }
 
     private void dijkstra(int intSource) {
@@ -230,9 +231,5 @@ public class DirectedWeightedGraph {
             }
         }
         return edges;
-    }
-
-    private void displayResult(String result) {
-        System.out.println(result);
     }
 }
