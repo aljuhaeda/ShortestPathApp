@@ -39,3 +39,15 @@ or direct `javac`/`java`.
 
 ## Next up
 - Nothing scheduled.
+
+## Verification log (continued)
+- 2026-07-28: fresh audit found a real, user-visible bug — the GUI's
+  add/remove handlers displayed hardcoded "success" messages regardless
+  of whether the underlying graph operation actually succeeded, so
+  failures (duplicate city, nonexistent city, cap hit) were silently
+  swallowed. Fixed: `DirectedWeightedGraph`'s mutation methods now
+  return a real status string the GUI displays. Added a duplicate-city
+  guard to `addVertex` and fixed `findName` to resolve to the first
+  match instead of the last. Recompiled with the JDK and exercised the
+  failure paths directly (duplicate city, nonexistent city, nonexistent
+  edge) to confirm each now reports its real outcome.
