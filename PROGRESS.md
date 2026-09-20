@@ -51,3 +51,5 @@ or direct `javac`/`java`.
   match instead of the last. Recompiled with the JDK and exercised the
   failure paths directly (duplicate city, nonexistent city, nonexistent
   edge) to confirm each now reports its real outcome.
+- 2026-09-20: NetBeans build output (`build/`, compiled `.class` files)
+  untracked, `.gitignore` added — repo hygiene only, no source change.
